@@ -97,3 +97,59 @@ Feature: Pet Store API Tests
     Given path 'pet', createdPetId
     When method delete
     Then status 200
+  
+  Scenario: Update pet information
+    * def newPet =
+      """
+      {
+        "id": 99009933,
+        "category": {
+          "id": 0,
+          "name": "string"
+        },
+        "name": "Cattie",
+        "photoUrls": [
+          "string"
+        ],
+        "tags": [
+          {
+            "id": 0,
+            "name": "string"
+          }
+        ],
+        "status": "available"
+      }
+      """
+    * def updatedPetInfo =
+      """
+      {
+        "id": 99009933,
+        "category": {
+          "id": 0,
+          "name": "string"
+        },
+        "name": "Cattelina",
+        "photoUrls": [
+          "string"
+        ],
+        "tags": [
+          {
+            "id": 0,
+            "name": "string"
+          }
+        ],
+        "status": "pending"
+      }
+      """
+    # Create a pet to update
+    Given path 'pet'
+    And request newPet
+    When method post
+    Then status 200
+    # Update the pet's information
+    Given path 'pet'
+    And request updatedPetInfo
+    When method put
+    Then status 200
+    And match response.name == updatedPetInfo.name
+    And match response.status == updatedPetInfo.status
