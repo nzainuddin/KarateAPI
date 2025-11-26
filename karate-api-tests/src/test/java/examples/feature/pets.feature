@@ -64,3 +64,36 @@ Feature: Pet Store API Tests
       | available  |
       | pending    |
       | sold       |
+
+  Scenario: Delete created pets
+  * def petStatusAvailable =
+      """
+      {
+        "id": 990099,
+        "category": {
+          "id": 0,
+          "name": "string"
+        },
+        "name": "doggie",
+        "photoUrls": [
+          "string"
+        ],
+        "tags": [
+          {
+            "id": 0,
+            "name": "string"
+          }
+        ],
+        "status": "available"
+      }
+      """
+    # Ensure pets exist before deletion
+    Given path 'pet'
+    And request petStatusAvailable
+    When method post
+    Then status 200
+    * def createdPetId = response.id
+    # Delete the created pets
+    Given path 'pet', createdPetId
+    When method delete
+    Then status 200
