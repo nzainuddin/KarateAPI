@@ -3,49 +3,66 @@ Feature: PetStore API tests
   Background:
     * url 'https://petstore3.swagger.io/api/v3'
 
-  Scenario: Get pets by status
+  Scenario Outline: Get pets by status
+    * def petStatusPending =
+      """
+      {
+        "id": 990099,
+        "category": {
+          "id": 0,
+          "name": "string"
+        },
+        "name": "doggie",
+        "photoUrls": [
+          "string"
+        ],
+        "tags": [
+          {
+            "id": 0,
+            "name": "string"
+          }
+        ],
+        "status": "pending"
+      }
+      """
+    * def petStatusSold =
+      """
+      {
+        "id": 990100,
+        "category": {
+          "id": 0,
+          "name": "string"
+        },
+        "name": "kitty",
+        "photoUrls": [
+          "string"
+        ],
+        "tags": [
+          {
+            "id": 0,
+            "name": "string"
+          }
+        ],
+        "status": "sold"
+      }
+      """
+    # Create pets with different statuses
+    Given path 'pet'
+    And request petStatusPending
+    When method post
+    Then status 200
+    Given path 'pet'
+    And request petStatusSold
+    When method post
+    Then status 200
     Given path 'pet', 'findByStatus'
-    And param status = 'available'
+    And param status = '<status>'
     When method get
     Then status 200
-    And match response[0] contains { status: 'available' }
-
-
-    * def first = response[0]
-    * print 'First pet ID:', first.id
-    * print 'First pet status:', first.status
-
-  #   Given path 'users', first.id
-  #   When method get
-  #   Then status 200
-
-  # Scenario: create a user and then get it by id
-  #   * def user =
-  #     """
-  #     {
-  #       "name": "Test User",
-  #       "username": "testuser",
-  #       "email": "test@user.com",
-  #       "address": {
-  #         "street": "Has No Name",
-  #         "suite": "Apt. 123",
-  #         "city": "Electri",
-  #         "zipcode": "54321-6789"
-  #       }
-  #     }
-  #     """
-
-  #   Given url 'https://jsonplaceholder.typicode.com/users'
-  #   And request user
-  #   When method post
-  #   Then status 201
-
-  #   * def id = response.id
-  #   * print 'created id is: ', id
-
-  #   Given path id
-  #   # When method get
-  #   # Then status 200
-  #   # And match response contains user
-
+    And match response[0].status == '<status>'
+    Examples:
+      | status     |
+      | available  |
+      | pending    |
+      | sold       |
 
