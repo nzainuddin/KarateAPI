@@ -1,0 +1,11 @@
+{
+    "name": "Elena Taber",
+    "username": "eltaber",
+    "email": "eltaber@user.com",
+    "address": {
+        "street": "Street 33",
+        "suite": "Apt. 123",
+        "city": "Electri",
+        "zipcode": "54321-6789"
+    }
+}

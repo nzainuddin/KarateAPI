@@ -28,10 +28,12 @@
         <testResources>
             <testResource>
                 <directory>src/test/java</directory>
-                <!-- <directory>src/test/resources</directory> -->
                 <excludes>
                     <exclude>**/*.java</exclude>
                 </excludes>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
             </testResource>
         </testResources>
         <plugins>
