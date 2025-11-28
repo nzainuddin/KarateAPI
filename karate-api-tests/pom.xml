@@ -22,16 +22,31 @@
             <version>${karate.version}</version>
             <scope>test</scope>
         </dependency>		
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.15.2</version>
+                <scope>test</scope>
+            </dependency>
+        <!-- JSON Schema validator (networknt) for mock payload validation -->
+        <dependency>
+            <groupId>com.networknt</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>1.0.80</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <testResources>
             <testResource>
                 <directory>src/test/java</directory>
-                <!-- <directory>src/test/resources</directory> -->
                 <excludes>
                     <exclude>**/*.java</exclude>
                 </excludes>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
             </testResource>
         </testResources>
         <plugins>
@@ -54,6 +69,28 @@
                 </configuration>
             </plugin>          
         </plugins>        
-    </build>       
+        </build>
     
-</project>
+        <profiles>
+            <profile>
+                <id>mock-users</id>
+                <build>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-surefire-plugin</artifactId>
+                            <version>${maven.surefire.version}</version>
+                            <configuration>
+                                <!-- run only the embedded mock runner when this profile is active -->
+                                <includes>
+                                    <include>**/UsersMockServerRunner*.java</include>
+                                </includes>
+                                <argLine>-Dfile.encoding=UTF-8</argLine>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </build>
+            </profile>
+        </profiles>
+
+    </project>
