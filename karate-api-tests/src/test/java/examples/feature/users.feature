@@ -1,7 +1,10 @@
 Feature: Users API tests
 
   Background:
-    * url 'https://jsonplaceholder.typicode.com'
+    # allow per-feature mock: pass -Dmock.users=true to run against a local json-server
+    # or set `karate.env=local-mock` to achieve the same effect from `karate-config.js`
+    * def base = (karate.properties['mock.users'] == 'true' || karate.env == 'local-mock') ? 'http://localhost:3000' : 'https://jsonplaceholder.typicode.com'
+    * url base
 
   Scenario: Get all users and then get the first user by id
     Given path 'users'
@@ -51,5 +54,6 @@ Feature: Users API tests
     When method get
     Then status 200
     And match response contains updatedUserDetails
+    
 
 
