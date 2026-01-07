@@ -3,49 +3,11 @@ Feature: Pet Store API Tests
   * url 'https://petstore3.swagger.io/api/v3'
 
   Scenario Outline: Get pets by status
-    * def petStatusPending =
-      """
-      {
-        "id": 990099,
-        "category": {
-          "id": 0,
-          "name": "string"
-        },
-        "name": "doggie",
-        "photoUrls": [
-          "string"
-        ],
-        "tags": [
-          {
-            "id": 0,
-            "name": "string"
-          }
-        ],
-        "status": "pending"
-      }
-      """
-    * def petStatusSold =
-      """
-      {
-        "id": 990100,
-        "category": {
-          "id": 0,
-          "name": "string"
-        },
-        "name": "kitty",
-        "photoUrls": [
-          "string"
-        ],
-        "tags": [
-          {
-            "id": 0,
-            "name": "string"
-          }
-        ],
-        "status": "sold"
-      }
-      """
+    * def petStatusPending = read('classpath:examples/pets/pet-pending.json')
+    * def petStatusSold = read('classpath:examples/pets/pet-sold.json')
     # Create pets with different statuses
+    * print petStatusPending
+    * print petStatusSold
     Given path 'pet'
     And request petStatusPending
     When method post
