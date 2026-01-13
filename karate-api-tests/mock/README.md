@@ -41,7 +41,3 @@ Notes
 - The embedded mock validates payloads and supports basic query-parameter filtering on `GET /users` (e.g. `GET /users?username=Bret`).
 - The embedded mock is intentionally lightweight; for advanced simulation (delays, conditional responses), consider a dedicated mock tool (WireMock, MockServer) or extend the embedded handler.
 - `target/mock-users.json` is created/updated during tests; it is placed under `target/` and is not intended to be committed.
-
-If you want, I can:
-- Add a Maven profile to run mock-backed tests with a flag (e.g. `-Pmock-users`).
-- Extend validation rules or add schema validation using JSON Schema.

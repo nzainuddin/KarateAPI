@@ -20,14 +20,8 @@ Feature: Employee API tests
         And print response.data.employee_name
 
     Scenario: Create a new employee
-        * def newEmployee =
-          """
-          {
-            "name": "Sarimah Ibrahim",
-            "salary": "5000",
-            "age": "29"
-          }
-          """
+        * def newEmployee = read('classpath:examples/employees/new-employee.json')
+        * print newEmployee
         Given path 'create'
         And request newEmployee
         When method post
